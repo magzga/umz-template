@@ -12,10 +12,6 @@ train_Y = train['Class']
 test_X = pd.DataFrame(test, columns=test.columns[:-1])
 test_Y = test['Class']
 
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(train_X, train_Y)
-
-
 def show_plot():
     dot_data = tree.export_graphviz(clf, out_file=None,
                                     feature_names=train.columns[:-1],
@@ -26,13 +22,17 @@ def show_plot():
     graph.view()
 
 
-clf = tree.DecisionTreeClassifier()
-clf = clf.fit(train_X, train_Y)
-show_plot()
+# clf = tree.DecisionTreeClassifier()
+# clf = clf.fit(train_X, train_Y)
+# show_plot()
 
 # clf = tree.DecisionTreeClassifier(max_depth=4)
 # clf = clf.fit(train_X, train_Y)
 # show_plot()
+
+clf = tree.DecisionTreeClassifier(max_depth=4)
+clf = clf.fit(train_X, train_Y)
+show_plot()
 
 print('TRAIN SET')
 print(confusion_matrix(clf.predict(train_X), train_Y))
