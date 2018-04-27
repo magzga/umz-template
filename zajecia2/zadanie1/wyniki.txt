@@ -1,0 +1,32 @@
+         Occupancy  Temperature     Humidity        Light          CO2  HumidityRatio
+count  8143.000000  8143.000000  8143.000000  8143.000000  8143.000000    8143.000000 
+mean      0.212330    20.619084    25.731507   119.519375   606.546243       0.003863 
+std       0.408982     1.016916     5.531211   194.755805   314.320877       0.000852 
+min       0.000000    19.000000    16.745000     0.000000   412.750000       0.002674
+25%       0.000000    19.700000    20.200000     0.000000   439.000000       0.003078
+50%       0.000000    20.390000    26.222500     0.000000   453.500000       0.003801
+75%       0.000000    21.390000    30.533333   256.375000   638.833333       0.004352 
+max       1.000000    23.180000    39.117500  1546.333333  2028.500000       0.006476
+        
+----------------------------------------------------------------------------------------------------
+Occupancy % on training set: 0.2123296082524868
+zero rule model accuracy on training set is 0.7876703917475132
+----------------------------------------------------------------------------------------------------
+lr model on all variables except date accuracy on training data: 0.9883335380081051
+True Positives: 1724
+True Negatives: 6324
+False Positives: 90
+False Negatives: 5
+lr model on all variables except date sensitivity on training data: 0.9971081550028918
+lr model on all variables except date specifity on training data: 0.9859681945743686
+----------------------------------------------------------------------------------------------------
+Occupancy % on dev set: 0.3647279549718574
+zero rule model accuracy on dev set is 0.6352720450281426
+----------------------------------------------------------------------------------------------------
+lr model on all variables except date accuracy on dev data: 0.9782363977485928
+True Positives: 969
+True Negatives: 1638
+False Positives: 55
+False Negatives: 3
+lr model on all variables except date sensitivity on dev data: 0.9969135802469136
+lr model on all variables except date specifity on dev data: 0.96751329001772
