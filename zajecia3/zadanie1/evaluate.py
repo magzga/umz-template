@@ -52,7 +52,7 @@ emails_list = emails.Email.emails_list
 train_set = emails_list[:int(0.9 * len(emails_list))]
 test_set = emails_list[int(0.9 * len(emails_list)):]
 acc, sens, spec, prec, fmeas = evaluate(
-    train_set, test_set, classifier.Bayes)
+    train_set, test_set, classifier.Bayes_laplac)
 print('accuracy:\t', acc)
 print('sensivity:\t', sens)
 print('specifity:\t', spec)
