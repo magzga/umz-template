@@ -19,10 +19,10 @@ def create_baseline():
     # dodanie jednego neuronu, wejście do tego neuronu to ilość cech, funkcja aktywacji sigmoid, początkowe wartości wektorów to zero.
     model.add(Dense(1, input_dim=X_train.shape[1], activation='sigmoid', kernel_initializer='zeros'))
     # stworzenie funkcji kosztu stochastic gradient descent
-    sgd = optimizers.SGD(lr=0.1)
+    # sgd = optimizers.SGD(lr=0.1)
     # kompilacja modelu
     model.compile(loss='binary_crossentropy',
-                  optimizer=sgd, metrics=['accuracy'])
+                  optimizer='adam', metrics=['accuracy'])
 
     # rysowanie architektury sieci, jeżeli ktoś ma zainstalowane odpowiednie biblioteki
     # from keras.utils import plot_model

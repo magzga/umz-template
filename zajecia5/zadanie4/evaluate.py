@@ -1,28 +1,31 @@
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.wrappers.scikit_learn import KerasClassifier
+from keras.wrappers.scikit_learn import KerasRegressor
 import os
 import pandas as pd
 from keras import optimizers
+from sklearn.preprocessing import StandardScaler
 
 
 r = pd.read_csv(os.path.join("train", "train.tsv"), header=None, names=[
-                "Occupancy", "date", "Temperature", "Humidity", "Light", "CO2", "HumidityRatio"], sep='\t')
+                "price", "isNew", "rooms", "floor", "location", "sqrMetres"], sep='\t')
 X_train = pd.DataFrame(
-    r, columns=["Temperature", "Humidity", "Light", "CO2", "HumidityRatio"])
-Y_train = pd.DataFrame(r, columns=["Occupancy"])
+    r, columns=["isNew", "rooms", "floor", "location", "sqrMetres"])
+Y_train = pd.DataFrame(r, columns=["price"])
 
+scaler = StandardScaler()
 
 def create_baseline():
     # stworzenie modelu sieci neuronowej
     model = Sequential()
     # dodanie jednego neuronu, wejście do tego neuronu to ilość cech, funkcja aktywacji sigmoid, początkowe wartości wektorów to zero.
-    model.add(Dense(1, input_dim=X_train.shape[1], activation='sigmoid', kernel_initializer='zeros'))
+    model.add(Dense(5, input_dim=X_train.shape[1], activation='relu', kernel_initializer='normal'))
+    model.add(Dense(1, kernel_initializer='normal'))
     # stworzenie funkcji kosztu stochastic gradient descent
-    sgd = optimizers.SGD(lr=0.1)
+    # sgd = optimizers.SGD(lr=0.1)
     # kompilacja modelu
     model.compile(loss='binary_crossentropy',
-                  optimizer=sgd, metrics=['accuracy'])
+                  optimizer='adam', metrics=['accuracy'])
 
     # rysowanie architektury sieci, jeżeli ktoś ma zainstalowane odpowiednie biblioteki
     # from keras.utils import plot_model
@@ -30,8 +33,8 @@ def create_baseline():
     return model
 
 
-estimator = KerasClassifier(
-    build_fn=create_baseline, epochs=3, verbose=True)
+estimator = KerasRegressor(
+    build_fn=create_baseline, epochs=100, verbose=True)
 
 
 estimator.fit(X_train, Y_train)
@@ -55,9 +58,5 @@ print('ACCURACY ON DEV DATA')
 print((predictions_dev == Y_dev).mean())
 
 with open(os.path.join("dev-0", "out.tsv"), 'w') as file:
-    for prediction in predictions_dev:
-        file.write(str(prediction[0]) + '\n')
-
-with open(os.path.join("test-A", "out.tsv"), 'w') as file:
     for prediction in predictions_dev:
         file.write(str(prediction[0]) + '\n')
