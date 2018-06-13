@@ -22,15 +22,15 @@ def show_plot():
     graph.view()
 
 
-# clf = tree.DecisionTreeClassifier()
-# clf = clf.fit(train_X, train_Y)
-# show_plot()
+clf = tree.DecisionTreeClassifier()
 
-# clf = tree.DecisionTreeClassifier(max_depth=4)
-# clf = clf.fit(train_X, train_Y)
-# show_plot()
+#clf = tree.DecisionTreeClassifier(max_depth=4)
 
-clf = tree.DecisionTreeClassifier(max_depth=4)
+#clf = tree.DecisionTreeClassifier(criterion="entropy")
+
+#clf = tree.DecisionTreeClassifier(splitter="random")
+
+#clf = tree.DecisionTreeClassifier(max_features=5)
 clf = clf.fit(train_X, train_Y)
 show_plot()
 

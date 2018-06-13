@@ -11,13 +11,17 @@ train_Y = train['Class']
 test_X = pd.DataFrame(test, columns=test.columns[:-1])
 test_Y = test['Class']
 
+#clf = KNeighborsClassifier(n_neighbors=3)
+#clf = clf.fit(train_X, train_Y)
 
-neigh = KNeighborsClassifier(n_neighbors=3)
-neigh = neigh.fit(train_X, train_Y) 
+#clf = KNeighborsClassifier(n_neighbors=5)
+#clf = clf.fit(train_X, train_Y)
 
-print(neigh.predict([[1.1]]))
+#clf = KNeighborsClassifier(n_neighbors=2)
+#clf = clf.fit(train_X, train_Y)
 
-print(neigh.predict_proba([[0.9]]))
+clf = KNeighborsClassifier(n_neighbors=7)
+clf = clf.fit(train_X, train_Y)
 
 print('TRAIN SET')
 print(confusion_matrix(clf.predict(train_X), train_Y))

@@ -16,9 +16,17 @@ test_Y = test['Class']
 # clf = clf.fit(train_X, train_Y)
 
 
-clf = RandomForestClassifier(max_depth=4)
-clf = clf.fit(train_X, train_Y)
+#clf = RandomForestClassifier(max_depth=4)
+#clf = clf.fit(train_X, train_Y)
 
+#clf = RandomForestClassifier(max_features=None)
+#clf = clf.fit(train_X, train_Y)
+
+#clf = RandomForestClassifier(max_depth=3)
+#clf = clf.fit(train_X, train_Y)
+
+clf = RandomForestClassifier(min_samples_split=10)
+clf = clf.fit(train_X, train_Y)
 
 print('TRAIN SET')
 print(confusion_matrix(clf.predict(train_X), train_Y))
