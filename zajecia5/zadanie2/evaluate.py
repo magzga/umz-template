@@ -44,8 +44,7 @@ print((predictions_train == Y_train).mean())
 
 r = pd.read_csv(os.path.join("dev-0", "in.tsv"), header=None, names=[
                 "date", "Temperature", "Humidity", "Light", "CO2", "HumidityRatio"], sep='\t')
-X_dev = pd.DataFrame(
-    r, columns=["Temperature", "Humidity", "Light", "CO2", "HumidityRatio"])
+X_dev = pd.DataFrame(r, columns=["Temperature", "Humidity", "Light", "CO2", "HumidityRatio"])
 
 Y_dev = pd.read_csv(os.path.join("dev-0", "expected.tsv"),
                     header=None, names=["Occupation"], sep='\t')
@@ -58,6 +57,12 @@ with open(os.path.join("dev-0", "out.tsv"), 'w') as file:
     for prediction in predictions_dev:
         file.write(str(prediction[0]) + '\n')
 
+r = pd.read_csv(os.path.join("test-A", "in.tsv"), header=None, names=[
+                "date", "Temperature", "Humidity", "Light", "CO2", "HumidityRatio"], sep='\t')
+X_test = pd.DataFrame(r, columns=["Temperature", "Humidity", "Light", "CO2", "HumidityRatio"])
+
+predictions_test = estimator.predict(X_test)
+
 with open(os.path.join("test-A", "out.tsv"), 'w') as file:
-    for prediction in predictions_dev:
+    for prediction in predictions_test:
         file.write(str(prediction[0]) + '\n')

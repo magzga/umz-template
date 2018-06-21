@@ -7,19 +7,20 @@ from keras import optimizers
 from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
-r = pd.read_csv(os.path.join("train", "train.tsv"), header=None, names=[
-                "price", "isNew", "rooms", "floor", "location", "sqrMetres"], sep='\t')
-X_train = pd.DataFrame(r, columns=["isNew", "rooms", "floor", "sqrMetres"])
+r = pd.read_csv(os.path.join("train", "in.tsv"), header=None, names=[
+                "price", "mileage", "year", "brand", "engingeType", "engineCapacity"], sep='\t')
+
+X_train = pd.DataFrame(r, columns=["mileage", "year", "engineCapacity"])
 Y_train = pd.DataFrame(r, columns=["price"])
 scaler.fit(X_train)
-X_train_scale = pd.DataFrame(scaler.transform(X_train), columns=["isNew", "rooms", "floor", "sqrMetres"])
+X_train_scale = pd.DataFrame(scaler.transform(X_train), columns=["mileage", "year", "engineCapacity"])
+
 
 def create_baseline():
     # stworzenie modelu sieci neuronowej
     model = Sequential()
     # dodanie jednego neuronu, wejście do tego neuronu to ilość cech, funkcja aktywacji sigmoid, początkowe wartości wektorów to zero.
     model.add(Dense(4, input_dim=X_train_scale.shape[1], activation='relu', kernel_initializer='normal'))
-    model.add(Dense(1, kernel_initializer='normal'))
     model.add(Dense(1, kernel_initializer='normal'))
     # stworzenie funkcji kosztu stochastic gradient descent
     # sgd = optimizers.SGD(lr=0.1)
@@ -31,15 +32,14 @@ def create_baseline():
     # plot_model(model, to_file='model.png')
     return model
 
-
-estimator = KerasRegressor(build_fn=create_baseline, epochs=100, batch_size = 5, verbose=True)
+estimator = KerasRegressor(build_fn=create_baseline, epochs=100, batch_size = 2, verbose=True)
 
 estimator.fit(X_train, Y_train)
 predictions_train = estimator.predict(X_train)
 
 r = pd.read_csv(os.path.join("dev-0", "in.tsv"), header=None, names=[
-                "isNew", "rooms", "floor", "location", "sqrMetres"], sep='\t')
-X_dev = pd.DataFrame(r, columns=["isNew", "rooms", "floor", "sqrMetres"])
+                "mileage", "year", "brand", "engingeType", "engineCapacity"], sep='\t')
+X_dev = pd.DataFrame(r, columns=["mileage", "year", "engineCapacity"])
 Y_dev = pd.read_csv(os.path.join("dev-0", "expected.tsv"),header=None, names=["price"], sep='\t')
 
 predictions_dev = estimator.predict(X_dev)
@@ -49,8 +49,8 @@ with open(os.path.join("dev-0", "out.tsv"), 'w') as file:
         file.write(str(line) + '\n')
 
 r = pd.read_csv(os.path.join("test-A", "in.tsv"), header=None, names=[
-                "isNew", "rooms", "floor", "location", "sqrMetres"], sep='\t')
-X_test = pd.DataFrame(r, columns=["isNew", "rooms", "floor", "sqrMetres"])
+                "mileage", "year", "brand", "engingeType", "engineCapacity"], sep='\t')
+X_test = pd.DataFrame(r, columns=["mileage", "year", "engineCapacity"])
 
 predictions_test = estimator.predict(X_test)
 
